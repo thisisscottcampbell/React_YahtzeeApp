@@ -3,22 +3,20 @@ import "./Die.css";
 
 class Die extends Component {
   static defaultProps = {
-    numberWords: ['one', 'two', 'three', 'four', 'five', 'six' ]
+    numberWords: ['one', 'two', 'three', 'four', 'five', 'six' ],
+    val: 5
   }
 
   handleDieClick = () => {
     this.props.handleClick(this.props.idx)
   }
   render() {
-    // this.props.numberWords[this.props.val - 1]
-    let classes = `Die fas fa-dice-${this.props.numberWords[this.props.val - 1]} fa-5x `;
-    if (this.props.locked) classes += 'Die-locked';
+    const { numberWords, locked, val, disabled, rolling } = this.props;
+    let classes = `Die fas fa-dice-${numberWords[val - 1]} fa-5x `;
+    if (locked) classes += "Die-locked";
+    if (rolling) classes += "Die-rolling";
     return (
-      <button
-        className={classes}
-        onClick={this.handleDieClick}
-      >
-      </button>
+      <i className={classes} onClick={this.handleClick} disabled={disabled} />
     );
   }
 }

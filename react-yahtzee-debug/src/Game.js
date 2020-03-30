@@ -29,6 +29,10 @@ class Game extends Component {
       }
     };
   
+  componentDidMount = () => {
+    this.animateRoll();
+  }
+  
   animateRoll = () => {
     this.setState ({rolling: true}, () => {
         setTimeout(this.roll, 1000);
@@ -70,6 +74,16 @@ class Game extends Component {
     this.roll();
   }
 
+  displayRollsInfo = () => {
+    const messages = [
+      "0 Rolls Left",
+      "1 Rolls Left",
+      "2 Rolls Left",
+      "Starting Round",
+    ]
+    return messages[this.state.rollsLeft];
+  }
+
   render() {
     return (
       <div className='Game'>
@@ -89,10 +103,10 @@ class Game extends Component {
             <div className='Game-button-wrapper'>
               <button
                 className='Game-reroll'
-                disabled={this.state.locked.every(x => x) || this.state.rollsLeft === 0 }
+                disabled={this.state.locked.every(x => x) || this.state.rollsLeft === 0 || this.state.rolling }
                 onClick={this.animateRoll}
               >
-                {this.state.rollsLeft} Rerolls Left
+                {this.displayRollsInfo()}
               </button>
             </div>
           </section>
